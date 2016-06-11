@@ -1,0 +1,46 @@
+<!-- Validation failure messages -->
+<% if @shopping_list.errors.any? %>
+  <% @shopping_list.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Shopping List #<%= @shopping_list.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_shopping_list/<%= @shopping_list.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for items_id -->
+      <div class="form-group">
+        <label for="items_id" class="control-label">
+          Items
+        </label>
+
+        <input type="text" id="items_id" name="items_id" placeholder="Items" class="form-control" value= "<%= Item.find_by( :id => @shopping_list.items_id).item_name %>">
+      </div>
+
+      <!-- Label and input for quantity -->
+      <div class="form-group">
+        <label for="quantity" class="control-label">
+          Quantity
+        </label>
+
+        <input type="text" id="quantity" name="quantity" placeholder="Quantity" class="form-control" value="<%= @shopping_list.quantity %>">
+      </div>
+
+      <button class="btn btn-default">
+        Update Shopping List
+      </button>
+      or
+      <a href="/shopping_lists/<%= @shopping_list.id %>">Cancel</a>
+    </form>
+  </div>
+</div>

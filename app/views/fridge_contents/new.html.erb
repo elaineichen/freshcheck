@@ -1,0 +1,91 @@
+<!-- Validation failure messages -->
+<% if @fridge_content.errors.any? %>
+  <% @fridge_content.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Add Fridge Content</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/create_fridge_content" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for items_id -->
+      <div class="form-group">
+        <label for="items_id" class="control-label">
+          Items
+        </label>
+
+    <%= select_tag(:items_id, options_from_collection_for_select(Item.all, :id, :item_name, @fridge_content.items_id), :class => "form-control") %>
+
+        <a href="/items/new">or add a new item</a>
+
+      </div>
+
+      <!-- Label and input for quantity -->
+      <div class="form-group">
+        <label for="quantity" class="control-label">
+          Quantity
+        </label>
+
+        <input type="text" id="quantity" name="quantity" placeholder="Quantity" class="form-control" value="<%= @fridge_content.quantity %>">
+      </div>
+
+      <!-- Label and input for expiration_date -->
+      <div class="form-group">
+        <label for="expiration_date" class="control-label">
+          Expiration date
+        </label>
+
+        <div class='input-group date' id='datetimepicker1'>
+          <input type='text' class="form-control" name="expiration_date" id="expiration_date">
+          <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+
+      </div>
+
+      <!-- Label and input for date_purchased -->
+      <div class="form-group">
+        <label for="date_purchased" class="control-label">
+          Date purchased
+        </label>
+
+        <div class='input-group date' id='datetimepicker2'>
+          <input type='text' class="form-control" name="date_purchased" id="date_purchased">
+          <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+
+      </div>
+
+      <button class="btn btn-success">
+        Create Fridge Content
+      </button>
+      or
+      <a href="/fridge_contents">Cancel</a>
+    </form>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function () {
+    $('#datetimepicker1').datetimepicker();
+  });
+</script>
+
+<script type="text/javascript">
+  $(function () {
+    $('#datetimepicker2').datetimepicker();
+  });
+</script>

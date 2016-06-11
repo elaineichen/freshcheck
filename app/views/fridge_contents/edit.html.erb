@@ -1,0 +1,64 @@
+<!-- Validation failure messages -->
+<% if @fridge_content.errors.any? %>
+  <% @fridge_content.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Fridge Content #<%= @fridge_content.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_fridge_content/<%= @fridge_content.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for items_id -->
+      <div class="form-group">
+        <label for="items_id" class="control-label">
+          Items
+        </label>
+
+        <input type="text" id="items_id" name="items_id" placeholder="Items" class="form-control" value="<%= Item.find_by( :id => @fridge_content.items_id).item_name %>">
+      </div>
+
+      <!-- Label and input for quantity -->
+      <div class="form-group">
+        <label for="quantity" class="control-label">
+          Quantity
+        </label>
+
+        <input type="text" id="quantity" name="quantity" placeholder="Quantity" class="form-control" value="<%= @fridge_content.quantity %>">
+      </div>
+
+      <!-- Label and input for expiration_date -->
+      <div class="form-group">
+        <label for="expiration_date" class="control-label">
+          Expiration date
+        </label>
+
+        <input type="text" id="expiration_date" name="expiration_date" placeholder="Expiration date" class="form-control" value="<%= @fridge_content.expiration_date %>">
+      </div>
+
+      <!-- Label and input for date_purchased -->
+      <div class="form-group">
+        <label for="date_purchased" class="control-label">
+          Date purchased
+        </label>
+
+        <input type="text" id="date_purchased" name="date_purchased" placeholder="Date purchased" class="form-control" value="<%= @fridge_content.date_purchased %>">
+      </div>
+
+      <button class="btn btn-default">
+        Update Fridge Content
+      </button>
+      or
+      <a href="/fridge_contents/<%= @fridge_content.id %>">Cancel</a>
+    </form>
+  </div>
+</div>
